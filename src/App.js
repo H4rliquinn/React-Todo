@@ -32,29 +32,41 @@ class App extends React.Component {
   }
 
   checkHandel=e=>{
-    // console.log(e.target.id);
-    this.setState(this.state.todoListItems.map(item=>{
-      if (item.id==e.target.id){
-        return {task:item.task,id:item.id,completed:true};
+    // console.log(e.target.checked);
+    const newState=this.state.todoListItems.map(item=>{
+      if (String(item.id)===String(e.target.id)){
+        if (e.target.checked){
+          return {task:item.task,id:item.id,completed:true};
+        } else {
+          return {task:item.task,id:item.id,completed:false};
+        }
       }else{
         return item;
       }
-    }))
+    })
+    this.setState({todoListItems:newState})
   }
 
-componentDidMount=()=>{
-  this.setState({todoListItems:itemList});
-}
+  clearHandel=e=>{
+    const newState=this.state.todoListItems.filter(item=>{
+      return item.completed===false;
+    })
+    this.setState({todoListItems:newState})
+  }
 
-componentDidUpdate(){
-  console.log(this.state);
-}
+  componentDidMount=()=>{
+    this.setState({todoListItems:itemList});
+  }
+
+  componentDidUpdate(){
+    // console.log(this.state);
+  }
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
         <TodoList todos={this.state.todoListItems} checkHandel={this.checkHandel}/>
-        <TodoForm todos={this.handleAdd} />
+        <TodoForm todos={this.handleAdd} clearHandel={this.clearHandel} />
       </div>
     );
   }
