@@ -28,7 +28,6 @@ class App extends React.Component {
     this.setState({
       todoListItems:[...this.state.todoListItems,newInput]
     });
-    this.setState({input:""})
   }
 
   checkHandel=e=>{
