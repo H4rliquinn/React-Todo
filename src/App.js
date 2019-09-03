@@ -31,15 +31,29 @@ class App extends React.Component {
     this.setState({input:""})
   }
 
+  checkHandel=e=>{
+    // console.log(e.target.id);
+    this.setState(this.state.todoListItems.map(item=>{
+      if (item.id==e.target.id){
+        return {task:item.task,id:item.id,completed:true};
+      }else{
+        return item;
+      }
+    }))
+  }
+
 componentDidMount=()=>{
   this.setState({todoListItems:itemList});
 }
 
+componentDidUpdate(){
+  console.log(this.state);
+}
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoList todos={this.state.todoListItems}/>
+        <TodoList todos={this.state.todoListItems} checkHandel={this.checkHandel}/>
         <TodoForm todos={this.handleAdd} />
       </div>
     );
